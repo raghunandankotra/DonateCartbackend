@@ -1,0 +1,44 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace HelloWorldMvcApp
+{
+	public class EmailClass
+	{
+		[Required]
+		[MinLength(10)]
+		[MaxLength(20)]
+		public string toEmail
+		{
+			get;
+			set;
+		}
+
+		[Required]
+		[MinLength(10)]
+		[MaxLength(20)]
+		public string fromEmail
+		{
+			get;
+			set;
+		}
+
+		[Required]
+		[MinLength(10)]
+		[MaxLength(20)]
+		public string subject
+		{
+			get;
+			set;
+		}
+
+                [Required]
+		[MinLength(10)]
+		[MaxLength(200)]
+		public string body
+		{
+			get;
+			set;
+		}
+	}
+}

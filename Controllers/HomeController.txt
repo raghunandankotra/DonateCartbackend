@@ -1,0 +1,107 @@
+using AngularCRUD.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using System.IO;
+using System.Text;
+
+namespace AngularCRUD.Controllers
+{
+	public class HomeController: Controller
+	{
+		public StreamWriter StreamWriter 
+		{
+			get;
+			set;
+		}
+		
+
+		/// <summary>  
+		///Send Email
+		/// </summary>  
+		/// <returns></returns>  
+		public string Send_Email(emailClass ec)
+		{
+                   startlogger();
+                   if (ec!= null)
+		{
+                     EmailSender es=new EmailSender();
+                     if(sendEmail())
+                      {
+                       StreamWriter.WriteLIne("Mail Sent");
+			
+		      }
+                     else
+                      {
+                         StreamWriter.WriteLIne("Mail sending failed");
+                      }
+
+		}
+		else
+		{
+			return "Please Enter valid Details";
+		}
+
+			
+		}
+	}
+
+	
+
+	/// <summary>  
+	/// Insert New Donor  
+	/// </summary>  
+	/// <param name = "Donor"></param>  
+	/// <returns></returns>  
+	public string Insert_Donor(Donor dnr)
+	{
+
+                startlogger();
+		if (dnr != null)
+		{
+			using (DemoEntities Obj = new DemoEntities())
+			{
+				Obj.Donor.Add(Employe);
+				Obj.SaveChanges();
+                                StreamWriter.WriteLIne("Donor has been created in DB");
+				return "Donor Added Successfully";
+			}
+		}
+		else
+		{
+                        StreamWriter.WriteLIne("Donor creation failed");
+			return "Donor Not Inserted! Try Again";
+		}
+	}
+
+     /// <summary>
+     /// Starts logger for logging in the text file
+     /// </summary>
+    public void startlogger()
+     {
+        // folder location for logging
+       var dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + @"\Donatecartlog";
+         if (!Directory.Exists(dir)) // if it doesn't exist, create
+        Directory.CreateDirectory(dir);
+         
+        this.StreamWriter = File.CreateText(Path.Combine(dir, String.Format("{0}__{1}", DateTime.Now.ToString("yyyyMMddhhmmss"), "Donatecart.txt")));
+         this.StreamWriter.AutoFlush = true;
+     }
+
+    
+     /// <summary>
+     /// Sens email
+     /// </summary>
+    public bool sendEmail()
+     {
+        
+     }
+
+
+
+
+}
+
+}
